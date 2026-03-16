@@ -1,6 +1,6 @@
 #include "Libro.h"
 
-Libro::Libro(string ci, string nombre)
+Libro::Libro(string ci, string nombre, DtFecha fechaRegistro): fechaRegistro(fechaRegistro)
 {
     this->ci = ci;
     this->nombre = nombre;
