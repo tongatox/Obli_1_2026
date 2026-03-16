@@ -1,0 +1,27 @@
+todo: Main.o Lector.o Prestamo.o Material.o Libro.o Revista.o DtMaterial.o DtLibro.o DtRevista.o DtFecha.o
+	g++ -Wall -o main Main.o Lector.o Prestamo.o Material.o Libro.o Revista.o DtMaterial.o DtLibro.o DtRevista.o DtFecha.o
+Main.o: Main.cpp
+	g++ -Wall -c Main.cpp
+Lector.o:
+	g++ -Wall -c Lector.cpp
+Prestamo.o:
+	g++ -Wall -c Prestamo.cpp
+Material.o:
+	g++ -Wall -c Material.cpp
+Libro.o:
+	g++ -Wall -c Libro.cpp
+Revista.o:
+	g++ -Wall -c Revista.cpp
+DtMaterial.o:
+	g++ -Wall -c DtMaterial.cpp
+DtLibro.o:
+	g++ -Wall -c DtLibro.cpp
+DtRevista.o:
+	g++ -Wall -c DtRevista.cpp
+DtFecha.o:
+	g++ -Wall -c DtFecha.cpp
+clean:
+	rm -f *.o
+	rm -f main
+
+
