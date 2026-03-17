@@ -4,6 +4,7 @@ Lector::Lector(string ci, string nombre, DtFecha fechaRegistro) : fechaRegistro(
 {
     this->ci = ci;
     this->nombre = nombre;
+    this->tope_prestamo = 0;
 }
 
 void Lector::setCi(string ci)
