@@ -23,6 +23,7 @@ bool Revista::getEsMensual()
 }
 Revista::~Revista()
 {
+    
 }
 
 float Revista::calcularMulta(int diasAtraso)

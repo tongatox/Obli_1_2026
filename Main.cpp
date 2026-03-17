@@ -56,6 +56,7 @@ void menuRegistarLector()
 
 void registrarLector(string ci, string nombre, DtFecha *fechaRegistro)
 {
+    
     if (colSocios.tope >= 1)
     {
         system("clear");

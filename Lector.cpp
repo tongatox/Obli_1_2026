@@ -35,7 +35,6 @@ int Lector::getTopePrestamo()
     return this->tope_prestamo;
 }
 
-
 DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
 {
     DtMaterial **materiales = new DtMaterial *[cantMateriales];
@@ -54,4 +53,10 @@ DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
         }
     }
     return materiales;
+}
+
+void Lector::agregarPrestamo(Prestamo *prestamo)
+{
+    this->prestamo[tope_prestamo] = prestamo;
+    tope_prestamo++;
 }
