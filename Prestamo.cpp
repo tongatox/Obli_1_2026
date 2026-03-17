@@ -1,9 +1,6 @@
 #include "Prestamo.h"
 
-
-
-
-Prestamo::Prestamo(int diasPermitidos, DtFecha fechaPrestamo): fechaPrestamo(fechaPrestamo)
+Prestamo::Prestamo(int diasPermitidos, DtFecha fechaPrestamo) : fechaPrestamo(fechaPrestamo)
 {
     this->diasPermitidos = diasPermitidos;
 }
