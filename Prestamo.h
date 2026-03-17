@@ -2,18 +2,24 @@
 #define PRESTAMO
 
 #include "DtFecha.h"
+#include "Material.h"
+
+
 
 class Prestamo
 {
 private:
     DtFecha fechaPrestamo;
     int diasPermitidos;
+    Material *material;
 
 public:
     Prestamo(int diasPermitidos, DtFecha fechaPrestamo);
     void setDiasP(int diasPermitidos);
     int getDiasP();
     ~Prestamo();
+
+    Material *getMaterial();
 };
 
 

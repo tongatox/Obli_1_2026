@@ -17,3 +17,9 @@ int Prestamo::getDiasP()
 Prestamo::~Prestamo()
 {
 }
+
+Material *Prestamo::getMaterial()
+{
+    return this->material;
+}
+
