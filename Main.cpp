@@ -3,15 +3,14 @@
 
 #include "Lector.h"
 
-#define MAX_LECTORES 1
-
+#define MAX_LECTORES 100
 using namespace std;
 
 struct Lectores
 {
     Lector *l[MAX_LECTORES];
     int tope;
-} colSocios;
+} colLectores;
 
 void menu()
 {
@@ -56,8 +55,9 @@ void menuRegistarLector()
 
 void registrarLector(string ci, string nombre, DtFecha *fechaRegistro)
 {
-    
-    if (colSocios.tope >= 1)
+    int i = 0;
+
+    if (colLectores.tope >= MAX_LECTORES)
     {
         system("clear");
         cout << "Cantidad maxima de socios alcanzada!!!" << endl;
@@ -65,20 +65,41 @@ void registrarLector(string ci, string nombre, DtFecha *fechaRegistro)
     }
     else
     {
+        while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
+            i++;
 
-        DtFecha fecha(fechaRegistro->getDia(), fechaRegistro->getMes(), fechaRegistro->getAnio());
-        Lector *lector = new Lector(ci, nombre, fecha);
-        colSocios.l[colSocios.tope] = lector;
-        colSocios.tope++;
-        cout << "Lector agregado con exito." << endl;
-        system("sleep 2");
+        if (colLectores.tope != i)
+        {
+            system("clear");
+            cout << "Ya existe un Lector con esa cedula." << endl;
+            system("sleep 2");
+        }
+        else
+        {
+
+            DtFecha fecha(fechaRegistro->getDia(), fechaRegistro->getMes(), fechaRegistro->getAnio());
+            Lector *lector = new Lector(ci, nombre, fecha);
+            colLectores.l[colLectores.tope] = lector;
+            colLectores.tope++;
+            cout << "Lector agregado con exito." << endl;
+            system("sleep 2");
+        }
     }
+}
+
+//void agregarPrestamo(string ci, string codigoMaterial, DtFecha* fechaPrestamo, int diasPermitidos);
+
+void menuAgregarPrestamo()
+{
+    system("clear");
+    cout << "______________________" << endl;
+    cout << "___Agregar Prestamo_____" << endl;
 }
 
 int main()
 {
 
-    colSocios.tope = 0;
+    colLectores.tope = 0;
     int opcion;
     menu();
     cin >> opcion;
@@ -91,6 +112,7 @@ int main()
             break;
 
         case 2:
+            menuAgregarPrestamo();
             break;
         }
         menu();

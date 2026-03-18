@@ -20,6 +20,7 @@ public:
     ~Prestamo();
 
     Material *getMaterial();
+    void agregarMaterial(Material * material);
 };
 
 
