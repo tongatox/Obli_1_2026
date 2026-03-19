@@ -10,6 +10,7 @@ class Material
 private:
     string codigo;
     string titulo;
+    //string tipo;
     int anioPublicado;
 public:
     Material(string codigo, string titulo, int anioPublicado);
