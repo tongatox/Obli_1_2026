@@ -23,3 +23,8 @@ Material *Prestamo::getMaterial()
     return this->material;
 }
 
+
+void Prestamo::agregarMaterial(Material * material)
+{
+    this->material = material;
+}

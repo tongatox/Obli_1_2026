@@ -32,7 +32,9 @@ public:
     ~Lector();
 
     int getTopePrestamo();
+    Prestamo ** getPrestamo();
     void agregarPrestamo(Prestamo *prestamo);
+
     DtMaterial **getMaterialesPrestados(int &cantMateriales);
 };
 

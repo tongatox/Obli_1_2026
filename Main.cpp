@@ -128,19 +128,36 @@ void menuAgregarPrestamo()
 void agregarPrestamo(string ci, string codigoMaterial, DtFecha *fechaPrestamo, int diasPermitidos)
 {
 
-    int i = 0;
+    int i = 0, a = 0, b = 0, f = 0;
+
     if (colMateriales.tope == 0)
         throw invalid_argument("Recuerde agregar un material previamente.");
 
     while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
-    {
         i++;
-        if (colLectores.tope == i)
-        {
-            throw invalid_argument("No existe un Lector con esa cedula");
-            system("sleep 2");
-        }
-    }
+    if (colLectores.tope == i)
+        throw invalid_argument("No existe un Lector con esa cedula");
+
+    while (colMateriales.tope > a && colMateriales.m[a]->getCodigo() != codigoMaterial)
+        a++;
+    if (colMateriales.tope == a)
+        throw invalid_argument("No existe un Material con ese codigo");
+
+    DtFecha fecha(fechaPrestamo->getDia(), fechaPrestamo->getMes(), fechaPrestamo->getAnio());
+
+    Prestamo *p = new Prestamo(diasPermitidos, fecha);
+
+    p->agregarMaterial(colMateriales.m[a]);
+
+    while (colLectores.l[i]->getTopePrestamo() > f && colLectores.l[i]->getPrestamo()[f]->getMaterial()->getCodigo() != codigoMaterial)
+        f++;
+    if (colLectores.l[i]->getTopePrestamo() != f)
+        throw invalid_argument("Ya tiene un prestamo con ese material");
+    
+    colLectores.l[i]->agregarPrestamo(p);
+    cout << "Prestamo agregado con exito." << endl;
+    system("sleep 2");
+
 }
 
 void agregarMaterial(DtMaterial *dtMaterial);

@@ -35,6 +35,17 @@ int Lector::getTopePrestamo()
     return this->tope_prestamo;
 }
 
+Prestamo **Lector::getPrestamo()
+{
+    int i = 0;
+    Prestamo **p = new Prestamo *[MAX_PRESTAMO];
+    for (i; i < this->getTopePrestamo(); i++)
+    {
+        p[i] = this->prestamo[i];
+    }
+    return p;
+}
+
 DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
 {
     if (cantMateriales < 11)
@@ -56,8 +67,6 @@ DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
         }
         return materiales;
     }
-
-    
 }
 
 void Lector::agregarPrestamo(Prestamo *prestamo)
