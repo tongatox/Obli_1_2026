@@ -1,11 +1,11 @@
 #include "DtMaterial.h"
 
-DtMaterial::DtMaterial(string codigo, string titulo, int anioPublicado, float multaBase)
+DtMaterial::DtMaterial(string codigo, string titulo, int anioPublicado)
 {
     this->codigo = codigo;
     this->titulo = titulo;
     this->anioPublicado = anioPublicado;
-    this->multaBase = multaBase;
+    this->multaBase = 0;
 }
 
 void DtMaterial::setCodigo(string codigo)

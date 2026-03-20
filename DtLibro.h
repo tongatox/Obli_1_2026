@@ -13,7 +13,7 @@ private:
     string autor;
     int cantPaginas;
 public:
-    DtLibro(string autor, int cantPaginas,string codigo, string titulo, int anioPublicado, float multaBase);
+    DtLibro(string autor, int cantPaginas,string codigo, string titulo, int anioPublicado);
     void setAutor(string autor);
     string getAutor();
     void setCantPaginas(int cantPaginas);

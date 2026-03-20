@@ -1,6 +1,6 @@
 #include "DtRevista.h"
 
-DtRevista::DtRevista(int numeroEdicion, bool esMensual, string codigo, string titulo, int anioPublicado, float multaBase) : DtMaterial(codigo, titulo, anioPublicado, multaBase)
+DtRevista::DtRevista(int numeroEdicion, bool esMensual, string codigo, string titulo, int anioPublicado) : DtMaterial(codigo, titulo, anioPublicado)
 {
     this->numeroEdicion = numeroEdicion;
     this->esMensual = esMensual;

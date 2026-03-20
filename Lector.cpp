@@ -45,12 +45,12 @@ DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
             if (Libro *l = dynamic_cast<Libro *>(prestamo[i]->getMaterial()))
             {
 
-                DtLibro *dtl = new DtLibro(l->getAutor(), l->getCantPaginas(), l->getCodigo(), l->getTitulo(), l->getAnioPubli(), l->calcularMulta(0));
+                DtLibro *dtl = new DtLibro(l->getAutor(), l->getCantPaginas(), l->getCodigo(), l->getTitulo(), l->getAnioPubli());
                 materiales[i] = dtl;
             }
             else if (Revista *r = dynamic_cast<Revista *>(prestamo[i]->getMaterial()))
             {
-                DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli(), r->calcularMulta(0));
+                DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli());
                 materiales[i] = dtr;
             }
         }

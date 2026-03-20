@@ -1,6 +1,6 @@
 #include "DtLibro.h"
 
-DtLibro::DtLibro(string autor, int cantPaginas, string codigo, string titulo, int anioPublicado, float multaBase) : DtMaterial(codigo, titulo, anioPublicado, multaBase)
+DtLibro::DtLibro(string autor, int cantPaginas, string codigo, string titulo, int anioPublicado) : DtMaterial(codigo, titulo, anioPublicado)
 {
     this->autor = autor;
     this->cantPaginas = cantPaginas;

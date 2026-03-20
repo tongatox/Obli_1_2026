@@ -14,7 +14,7 @@ private:
     int anioPublicado;
     float multaBase;
 public:
-    DtMaterial(string codigo, string titulo, int anioPublicado,float multaBase);
+    DtMaterial(string codigo, string titulo, int anioPublicado);
     void setCodigo(string codigo);
     string getCodigo();
     void setTitulo(string titulo);
@@ -23,7 +23,7 @@ public:
     int getAnioPubli();
     void setMultaBase(float multaBase);
     float getMultaBase();
-    ~DtMaterial();
+    virtual ~DtMaterial() = 0;
 };
 
 
