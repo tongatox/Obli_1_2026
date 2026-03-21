@@ -19,6 +19,8 @@ public:
     void setCantPaginas(int cantPaginas);
     int getCantPaginas();
     ~DtLibro();
+    
+    void mostrarMateriales();
 };
 
 

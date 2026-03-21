@@ -6,7 +6,7 @@ using namespace std;
 DtFecha::DtFecha(int dia, int mes, int anio)
 {
     if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1900)
-        throw invalid_argument("Fecha no valida\n");
+        throw invalid_argument("Fecha no valida");
     else
     {
         this->dia = dia;

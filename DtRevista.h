@@ -15,6 +15,8 @@ public:
     void setEsMensual(bool esMensual);
     bool getEsMensual();
     ~DtRevista();
+
+    void mostrarMateriales();
 };
 
 

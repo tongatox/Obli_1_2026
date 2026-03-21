@@ -29,3 +29,13 @@ int DtLibro::getCantPaginas()
 DtLibro::~DtLibro()
 {
 }
+
+
+void DtLibro::mostrarMateriales()
+{
+    cout << "- Código: "<< this->getCodigo() << endl;
+    cout << "- Título: "<< this->getTitulo() << endl;
+    cout << "- Año de publicación: " << this->getAnioPubli() << endl;
+    cout << "- Autor: " << this->getAutor() << endl;
+    cout << "- Cantidad de páginas: " << this->getCantPaginas() << endl;
+}

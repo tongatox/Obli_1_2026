@@ -28,9 +28,10 @@ void menu()
     cout << "1. Agregar Lector" << endl;
     cout << "2. Agregar Prestamo" << endl;
     cout << "3. Agregar Material" << endl;
-    cout << "4. " << endl;
-    cout << "5. " << endl;
-    cout << "6. Exit" << endl;
+    cout << "4. Obtener Materiales Prestados" << endl;
+    cout << "5. Consultar Multa" << endl;
+    cout << "6. Ver Prestamos antes de fecha" << endl;
+    cout << "7. Exit" << endl;
     cout << "OPCION: ";
 }
 
@@ -56,16 +57,14 @@ void menuRegistarLector()
     cout << "Año: ";
     cin >> anio;
 
-    DtFecha *fechaRegistro = new DtFecha(dia, mes, anio);
-
     try
     {
+        DtFecha *fechaRegistro = new DtFecha(dia, mes, anio);
         registrarLector(ci, nombre, fechaRegistro);
     }
     catch (invalid_argument &e)
     {
         cout << e.what() << '\n';
-        system("sleep 2");
     }
 }
 
@@ -87,7 +86,6 @@ void registrarLector(string ci, string nombre, DtFecha *fechaRegistro)
     colLectores.l[colLectores.tope] = lector;
     colLectores.tope++;
     cout << "Lector agregado con exito." << endl;
-    system("sleep 2");
 }
 
 void agregarPrestamo(string ci, string codigoMaterial, DtFecha *fechaPrestamo, int diasPermitidos);
@@ -99,10 +97,10 @@ void menuAgregarPrestamo()
 
     system("clear");
     cout << "______________________" << endl;
-    cout << "___Agregar Prestamo_____" << endl;
+    cout << "___Agregar Prestamo___" << endl;
     cout << "Ingrece cedula del Lector: ";
     cin >> ci;
-    cout << "Ingrece codigo del material a presar: ";
+    cout << "Ingrece codigo del material a prestar: ";
     cin >> codigoMaterial;
     cout << "Ingrese la fecha del prestamo: " << endl;
     cout << "Día: ";
@@ -114,21 +112,20 @@ void menuAgregarPrestamo()
     cout << "Dias de prestamo permitidos: ";
     cin >> diasPermitidos;
 
-    DtFecha *fecha = new DtFecha(dia, mes, anio);
     try
     {
+        DtFecha *fecha = new DtFecha(dia, mes, anio);
         agregarPrestamo(ci, codigoMaterial, fecha, diasPermitidos);
     }
     catch (invalid_argument &e)
     {
         cout << e.what() << '\n';
-        system("sleep 2");
     }
 }
 void agregarPrestamo(string ci, string codigoMaterial, DtFecha *fechaPrestamo, int diasPermitidos)
 {
 
-    int i = 0, a = 0, b = 0, f = 0;
+    int i = 0, a = 0, f = 0;
 
     if (colMateriales.tope == 0)
         throw invalid_argument("Recuerde agregar un material previamente.");
@@ -153,11 +150,9 @@ void agregarPrestamo(string ci, string codigoMaterial, DtFecha *fechaPrestamo, i
         f++;
     if (colLectores.l[i]->getTopePrestamo() != f)
         throw invalid_argument("Ya tiene un prestamo con ese material");
-    
+
     colLectores.l[i]->agregarPrestamo(p);
     cout << "Prestamo agregado con exito." << endl;
-    system("sleep 2");
-
 }
 
 void agregarMaterial(DtMaterial *dtMaterial);
@@ -173,6 +168,7 @@ void menuAgregarMaterial()
     cout << "Seleccione tipo Material: " << endl;
     cout << "1. Libro." << endl;
     cout << "2. Revista." << endl;
+    cout << "Opcion: ";
     cin >> tipo;
     cout << "Ingrese Codigo: ";
     cin >> codigo;
@@ -201,7 +197,6 @@ void menuAgregarMaterial()
         catch (invalid_argument &e)
         {
             cout << e.what() << '\n';
-            system("sleep 2");
         }
         break;
     }
@@ -213,6 +208,7 @@ void menuAgregarMaterial()
         cout << "Es mensual: " << endl;
         cout << "1. Si." << endl;
         cout << "2. No." << endl;
+        cout << "Opcion: ";
         cin >> opMensual;
         switch (opMensual)
         {
@@ -237,7 +233,6 @@ void menuAgregarMaterial()
         catch (invalid_argument &e)
         {
             cout << e.what() << '\n';
-            system("sleep 2");
         }
 
         break;
@@ -264,7 +259,6 @@ void agregarMaterial(DtMaterial *dtmaterial)
         colMateriales.m[colMateriales.tope] = l;
         colMateriales.tope++;
         cout << "Material agregado con exito." << endl;
-        system("sleep 2");
     }
     else if (DtRevista *dtr = dynamic_cast<DtRevista *>(dtmaterial))
     {
@@ -272,8 +266,112 @@ void agregarMaterial(DtMaterial *dtmaterial)
         colMateriales.m[colMateriales.tope] = r;
         colMateriales.tope++;
         cout << "Material agregado con exito." << endl;
-        system("sleep 2");
     }
+}
+
+DtMaterial **obtenerMaterialesPrestados(string ci, int &cantMateriales);
+
+void menuObtenerMaterialesPrestados()
+{
+
+    string ci;
+    int cantMateriales;
+    DtMaterial **dtm;
+    system("clear");
+    cout << "__________________________________" << endl;
+    cout << "___Obtener Materiales Prestados___" << endl;
+    cout << "Ingrese cedula de lector: ";
+    cin >> ci;
+    cout << "Ingrese cantidad de materiales a obtener: ";
+    cin >> cantMateriales;
+
+    try
+    {
+        dtm = obtenerMaterialesPrestados(ci, cantMateriales);
+        for (int i = 0; i < cantMateriales; i++)
+        {
+            dtm[i]->mostrarMateriales();
+            system("sleep 1");
+            cout << '\n';
+        }
+    }
+    catch (invalid_argument &e)
+    {
+        cout << e.what() << '\n';
+    }
+}
+
+DtMaterial **obtenerMaterialesPrestados(string ci, int &cantMateriales)
+{
+    int i = 0;
+
+    while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
+        i++;
+    if (colLectores.tope == i)
+        throw invalid_argument("No existe un Lector con esa cedula");
+    if (cantMateriales > 11)
+        throw invalid_argument("La cantidad de materiales debe ser 10 como maximo.");
+
+    return colLectores.l[i]->getMaterialesPrestados(cantMateriales);
+}
+
+float consultarMultaMaterial(string ci, string codigoMaterial, int diasAtraso);
+
+void menuConsultarMultaMaterial()
+{
+    string ci, codigoMaterial;
+    int diasAtraso;
+    float multa = 0;
+
+    system("clear");
+    cout << "______________________________" << endl;
+    cout << "___Consultar Multa Material___" << endl;
+    cout << "Ingrese cedula del lector: ";
+    cin >> ci;
+    cout << "Ingrese codigo del material: ";
+    cin >> codigoMaterial;
+    cout << "Ingrese dias de atraso: ";
+    cin >> diasAtraso;
+
+    try
+    {
+        multa = consultarMultaMaterial(ci, codigoMaterial, diasAtraso);
+        cout << "La multa es de: " << multa << endl;
+    }
+    catch (invalid_argument &e)
+    {
+        cout << e.what() << '\n';
+    }
+}
+
+float consultarMultaMaterial(string ci, string codigoMaterial, int diasAtraso)
+{
+    int i = 0, a = 0, f = 0;
+
+    while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
+        i++;
+    if (colLectores.tope == i)
+        throw invalid_argument("No existe un Lector con esa cedula");
+
+    while (colMateriales.tope > a && colMateriales.m[a]->getCodigo() != codigoMaterial)
+        a++;
+    if (colMateriales.tope == a)
+        throw invalid_argument("No existe un Material con ese codigo");
+
+    while (colLectores.l[i]->getTopePrestamo() > f && colLectores.l[i]->getPrestamo()[f]->getMaterial()->getCodigo() != codigoMaterial)
+        f++;
+    if (colLectores.l[i]->getTopePrestamo() == f)
+        throw invalid_argument("Ese material no esta prrstado a ese lector.");
+
+    return colLectores.l[i]->getPrestamo()[f]->getMaterial()->calcularMulta(diasAtraso);
+}
+
+
+DtMaterial** verPrestamosAntesDeFecha(string ci, DtFecha* fecha, int& cantPrestamos);
+
+void menuVerPrestamosAntesDeFecha()
+{
+
 }
 
 int main()
@@ -285,7 +383,7 @@ int main()
     int opcion;
     menu();
     cin >> opcion;
-    while (opcion != 6)
+    while (opcion != 7)
     {
         switch (opcion)
         {
@@ -300,12 +398,16 @@ int main()
             menuAgregarMaterial();
             break;
         case 4:
-
+            menuObtenerMaterialesPrestados();
             break;
         case 5:
-
+            menuConsultarMultaMaterial();
+            break;
+        case 6:
+            menuVerPrestamosAntesDeFecha();
             break;
         }
+        system("sleep 2");
         menu();
         cin >> opcion;
     }

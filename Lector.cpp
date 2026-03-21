@@ -37,9 +37,8 @@ int Lector::getTopePrestamo()
 
 Prestamo **Lector::getPrestamo()
 {
-    int i = 0;
     Prestamo **p = new Prestamo *[MAX_PRESTAMO];
-    for (i; i < this->getTopePrestamo(); i++)
+    for (int i = 0; i < this->getTopePrestamo(); i++)
     {
         p[i] = this->prestamo[i];
     }
@@ -48,25 +47,23 @@ Prestamo **Lector::getPrestamo()
 
 DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
 {
-    if (cantMateriales < 11)
-    {
-        DtMaterial **materiales = new DtMaterial *[cantMateriales];
-        for (int i = 0; i < cantMateriales; i++)
-        {
-            if (Libro *l = dynamic_cast<Libro *>(prestamo[i]->getMaterial()))
-            {
 
-                DtLibro *dtl = new DtLibro(l->getAutor(), l->getCantPaginas(), l->getCodigo(), l->getTitulo(), l->getAnioPubli());
-                materiales[i] = dtl;
-            }
-            else if (Revista *r = dynamic_cast<Revista *>(prestamo[i]->getMaterial()))
-            {
-                DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli());
-                materiales[i] = dtr;
-            }
+    DtMaterial **materiales = new DtMaterial *[cantMateriales];
+    for (int i = 0; i < cantMateriales; i++)
+    {
+        if (Libro *l = dynamic_cast<Libro *>(prestamo[i]->getMaterial()))
+        {
+
+            DtLibro *dtl = new DtLibro(l->getAutor(), l->getCantPaginas(), l->getCodigo(), l->getTitulo(), l->getAnioPubli());
+            materiales[i] = dtl;
         }
-        return materiales;
+        else if (Revista *r = dynamic_cast<Revista *>(prestamo[i]->getMaterial()))
+        {
+            DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli());
+            materiales[i] = dtr;
+        }
     }
+    return materiales;
 }
 
 void Lector::agregarPrestamo(Prestamo *prestamo)

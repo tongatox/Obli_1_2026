@@ -24,3 +24,19 @@ bool DtRevista::getEsMensual()
 DtRevista::~DtRevista()
 {
 }
+
+void DtRevista::mostrarMateriales()
+{
+    cout << "- Código: " << this->getCodigo() << endl;
+    cout << "- Título: " << this->getTitulo() << endl;
+    cout << "- Año de publicación: " << this->getAnioPubli() << endl;
+    cout << "- Número de edición: " << this->getNumeroEdicion() << endl;
+    if (this->esMensual)
+    {
+        cout << "- Es mensual: Sí";
+    }
+    else
+    {
+        cout << "- Es mensual: no";
+    }
+}

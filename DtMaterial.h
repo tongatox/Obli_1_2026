@@ -2,6 +2,8 @@
 #define DTMATERIAL
 
 #include <string>
+#include <iostream>
+
 
 using namespace std;
 
@@ -23,7 +25,9 @@ public:
     int getAnioPubli();
     void setMultaBase(float multaBase);
     float getMultaBase();
-    virtual ~DtMaterial() = 0;
+    ~DtMaterial();
+
+    virtual void mostrarMateriales() = 0; 
 };
 
 
