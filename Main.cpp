@@ -366,12 +366,74 @@ float consultarMultaMaterial(string ci, string codigoMaterial, int diasAtraso)
     return colLectores.l[i]->getPrestamo()[f]->getMaterial()->calcularMulta(diasAtraso);
 }
 
-
-DtMaterial** verPrestamosAntesDeFecha(string ci, DtFecha* fecha, int& cantPrestamos);
+DtMaterial **verPrestamosAntesDeFecha(string ci, DtFecha *fecha, int &cantPrestamos);
 
 void menuVerPrestamosAntesDeFecha()
 {
+    string ci;
+    int dia, mes, anio, cantPrestamos;
+    system("clear");
+    cout << "__________________________________" << endl;
+    cout << "___Ver Prestamos Antes de Fecha___" << endl;
+    cout << "Ingrese cedula del lector: ";
+    cin >> ci;
+    cout << "Ingrese fecha a comparar: " << endl;
+    cout << "Dia: ";
+    cin >> dia;
+    cout << "Mes: ";
+    cin >> mes;
+    cout << "Año: ";
+    cin >> anio;
+    cout << "Ingrese cantidad de prestamos: ";
+    cin >> cantPrestamos;
+    DtMaterial **m;
+    try
+    {
+        DtFecha *fecha = new DtFecha(dia, mes, anio);
+        m = verPrestamosAntesDeFecha(ci, fecha, cantPrestamos);
+        for (int i = 0; i < cantPrestamos; i++)
+        {
+            m[i]->mostrarMateriales();
+            system("sleep 1");
+            cout << '\n';
+        }
+        system("sleep 6");
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
 
+DtMaterial **verPrestamosAntesDeFecha(string ci, DtFecha *fecha, int &cantPrestamos)
+{
+    int i = 0;
+    DtMaterial **dtm = new DtMaterial *[cantPrestamos];
+    while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
+        i++;
+    if (colLectores.tope == i)
+        throw invalid_argument("No existe un Lector con esa cedula");
+    if (colLectores.l[i]->getTopePrestamo() < cantPrestamos)
+        throw invalid_argument("No puede pedir mas prestamos de los que tiene el lector");
+
+    for (int a = 0; a < cantPrestamos ; a++)
+    {
+        if (!colLectores.l[i]->getPrestamo()[a]->getFecha().FmayorqueF(fecha) &&  colLectores.l[i]->getPrestamo()[a] == NULL)
+        {
+            if (Libro *l = dynamic_cast<Libro *>(colLectores.l[i]->getPrestamo()[a]->getMaterial()))
+            {
+                DtLibro *dtl = new DtLibro(l->getAutor(), l->getCantPaginas(), l->getCodigo(), l->getTitulo(), l->getAnioPubli());
+                dtm[a] = dtl;
+            }
+            else if (Revista *r = dynamic_cast<Revista *>(colLectores.l[i]->getPrestamo()[a]->getMaterial()))
+            {
+                DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli());
+                dtm[a] = dtr;
+            }
+
+        }
+    }
+    return dtm;
 }
 
 int main()

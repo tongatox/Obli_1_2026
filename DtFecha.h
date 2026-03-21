@@ -17,7 +17,7 @@ public:
     int getAnio();
     void setAnio(int anio);
     ~DtFecha();
-    //bool FmayorqueF(DtFecha *fecha);
+    bool FmayorqueF(DtFecha *fecha);
 };
 
 #endif

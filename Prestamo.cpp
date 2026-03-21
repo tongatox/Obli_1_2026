@@ -18,6 +18,11 @@ Prestamo::~Prestamo()
 {
 }
 
+DtFecha Prestamo::getFecha()
+{
+    return this->fechaPrestamo;
+}
+
 Material *Prestamo::getMaterial()
 {
     return this->material;

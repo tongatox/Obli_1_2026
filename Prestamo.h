@@ -20,8 +20,10 @@ public:
     int getDiasP();
     ~Prestamo();
 
+    DtFecha getFecha();
     Material *getMaterial();
     void agregarMaterial(Material * material);
+
 };
 
 
