@@ -6,7 +6,13 @@ using namespace std;
 DtFecha::DtFecha(int dia, int mes, int anio)
 {
     if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1900)
+    {
         throw invalid_argument("Fecha no valida");
+    }
+    else if (mes == 2 && dia > 28)
+    {
+        throw invalid_argument("Fecha no valida");
+    }
     else
     {
         this->dia = dia;
@@ -54,21 +60,21 @@ void DtFecha::setAnio(int anio)
         this->anio = anio;
 }
 
-bool DtFecha::FmayorqueF(DtFecha *fecha) // Devuelve true solo si fecha1 es mas antigua que fecha2, si no, devuelve false.
+bool DtFecha::FmayorqueF(DtFecha *fecha) // Devuelve true solo si la fecha implicita es mas antigua que la fecha que me pasan, si no, devuelve false.
 {
-    if (fecha->getAnio() < this->getAnio())
+    if (fecha->getAnio() > this->getAnio())
     {
         return true;
     }
     else if (fecha->getAnio() == this->getAnio())
     {
-        if (fecha->getMes() < this->getMes())
+        if (fecha->getMes() > this->getMes())
         {
             return true;
         }
         else if (fecha->getMes() == this->getMes())
         {
-            if (fecha->getDia() < this->getDia())
+            if (fecha->getDia() >= this->getDia())
             {
                 return true;
             }

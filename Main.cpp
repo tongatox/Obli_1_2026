@@ -22,7 +22,7 @@ struct Materiales
 
 void menu()
 {
-    system("clear");
+    // system("clear");
     cout << "________________________" << endl;
     cout << "_________MENU___________" << endl;
     cout << "1. Agregar Lector" << endl;
@@ -311,6 +311,8 @@ DtMaterial **obtenerMaterialesPrestados(string ci, int &cantMateriales)
         throw invalid_argument("No existe un Lector con esa cedula");
     if (cantMateriales > 11)
         throw invalid_argument("La cantidad de materiales debe ser 10 como maximo.");
+    if (colLectores.l[i]->getTopePrestamo() < cantMateriales)
+        throw invalid_argument("No puede pedir mas materiales prestados de los que tiene el lector");
 
     return colLectores.l[i]->getMaterialesPrestados(cantMateriales);
 }
@@ -386,6 +388,7 @@ void menuVerPrestamosAntesDeFecha()
     cin >> anio;
     cout << "Ingrese cantidad de prestamos: ";
     cin >> cantPrestamos;
+    cout << '\n';
     DtMaterial **m;
     try
     {
@@ -393,9 +396,19 @@ void menuVerPrestamosAntesDeFecha()
         m = verPrestamosAntesDeFecha(ci, fecha, cantPrestamos);
         for (int i = 0; i < cantPrestamos; i++)
         {
-            m[i]->mostrarMateriales();
-            system("sleep 1");
-            cout << '\n';
+            if (m[i] != NULL)
+            {
+                cout << "Prestamo: " << i +1  << endl;
+                m[i]->mostrarMateriales();
+                system("sleep 1");
+                cout << '\n';
+            }
+            else
+            {
+                cout << "Prestamo: " << i +1  << endl;
+                cout << "No cumple requisitos de fecha." << endl;
+                cout << '\n';
+            }
         }
         system("sleep 6");
     }
@@ -416,9 +429,9 @@ DtMaterial **verPrestamosAntesDeFecha(string ci, DtFecha *fecha, int &cantPresta
     if (colLectores.l[i]->getTopePrestamo() < cantPrestamos)
         throw invalid_argument("No puede pedir mas prestamos de los que tiene el lector");
 
-    for (int a = 0; a < cantPrestamos ; a++)
+    for (int a = 0; a < cantPrestamos; a++)
     {
-        if (!colLectores.l[i]->getPrestamo()[a]->getFecha().FmayorqueF(fecha) &&  colLectores.l[i]->getPrestamo()[a] == NULL)
+        if (colLectores.l[i]->getPrestamo()[a]->getFecha().FmayorqueF(fecha))
         {
             if (Libro *l = dynamic_cast<Libro *>(colLectores.l[i]->getPrestamo()[a]->getMaterial()))
             {
@@ -430,7 +443,10 @@ DtMaterial **verPrestamosAntesDeFecha(string ci, DtFecha *fecha, int &cantPresta
                 DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli());
                 dtm[a] = dtr;
             }
-
+        }
+        else
+        {
+            dtm[a] = NULL;
         }
     }
     return dtm;

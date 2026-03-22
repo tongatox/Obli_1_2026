@@ -27,16 +27,17 @@ DtRevista::~DtRevista()
 
 void DtRevista::mostrarMateriales()
 {
+    cout << "Material: Revista" << endl;
     cout << "- Código: " << this->getCodigo() << endl;
     cout << "- Título: " << this->getTitulo() << endl;
     cout << "- Año de publicación: " << this->getAnioPubli() << endl;
     cout << "- Número de edición: " << this->getNumeroEdicion() << endl;
     if (this->esMensual)
     {
-        cout << "- Es mensual: Sí";
+        cout << "- Es mensual: Sí" << endl;
     }
     else
     {
-        cout << "- Es mensual: no";
+        cout << "- Es mensual: no" << endl;
     }
 }

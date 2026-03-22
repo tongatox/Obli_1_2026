@@ -33,6 +33,7 @@ DtLibro::~DtLibro()
 
 void DtLibro::mostrarMateriales()
 {
+    cout << "Material: Libro" << endl;
     cout << "- Código: "<< this->getCodigo() << endl;
     cout << "- Título: "<< this->getTitulo() << endl;
     cout << "- Año de publicación: " << this->getAnioPubli() << endl;
