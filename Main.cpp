@@ -401,7 +401,7 @@ void menuVerPrestamosAntesDeFecha()
             system("sleep 1");
             cout << '\n';
         }
-        system("sleep 6");
+        system("sleep 5");
     }
     catch (const std::exception &e)
     {
