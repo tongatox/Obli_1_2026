@@ -22,7 +22,7 @@ struct Materiales
 
 void menu()
 {
-    // system("clear");
+    system("clear");
     cout << "________________________" << endl;
     cout << "_________MENU___________" << endl;
     cout << "1. Agregar Lector" << endl;
@@ -396,19 +396,10 @@ void menuVerPrestamosAntesDeFecha()
         m = verPrestamosAntesDeFecha(ci, fecha, cantPrestamos);
         for (int i = 0; i < cantPrestamos; i++)
         {
-            if (m[i] != NULL)
-            {
-                cout << "Prestamo: " << i +1  << endl;
-                m[i]->mostrarMateriales();
-                system("sleep 1");
-                cout << '\n';
-            }
-            else
-            {
-                cout << "Prestamo: " << i +1  << endl;
-                cout << "No cumple requisitos de fecha." << endl;
-                cout << '\n';
-            }
+            cout << "Prestamo: " << i + 1 << endl;
+            m[i]->mostrarMateriales();
+            system("sleep 1");
+            cout << '\n';
         }
         system("sleep 6");
     }
@@ -420,7 +411,7 @@ void menuVerPrestamosAntesDeFecha()
 
 DtMaterial **verPrestamosAntesDeFecha(string ci, DtFecha *fecha, int &cantPrestamos)
 {
-    int i = 0;
+    int i = 0, x = 0;
     DtMaterial **dtm = new DtMaterial *[cantPrestamos];
     while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
         i++;
@@ -429,26 +420,38 @@ DtMaterial **verPrestamosAntesDeFecha(string ci, DtFecha *fecha, int &cantPresta
     if (colLectores.l[i]->getTopePrestamo() < cantPrestamos)
         throw invalid_argument("No puede pedir mas prestamos de los que tiene el lector");
 
-    for (int a = 0; a < cantPrestamos; a++)
+    for (int a = 0; a < colLectores.l[i]->getTopePrestamo(); a++)
     {
         if (colLectores.l[i]->getPrestamo()[a]->getFecha().FmayorqueF(fecha))
         {
             if (Libro *l = dynamic_cast<Libro *>(colLectores.l[i]->getPrestamo()[a]->getMaterial()))
             {
                 DtLibro *dtl = new DtLibro(l->getAutor(), l->getCantPaginas(), l->getCodigo(), l->getTitulo(), l->getAnioPubli());
-                dtm[a] = dtl;
+                if (x < cantPrestamos)
+                {
+                    dtm[x] = dtl;
+                }
+                else
+                {
+                    return dtm;
+                }
             }
             else if (Revista *r = dynamic_cast<Revista *>(colLectores.l[i]->getPrestamo()[a]->getMaterial()))
             {
                 DtRevista *dtr = new DtRevista(r->getNumeroEdicion(), r->getEsMensual(), r->getCodigo(), r->getTitulo(), r->getAnioPubli());
-                dtm[a] = dtr;
+                if (x < cantPrestamos)
+                {
+                    dtm[x] = dtr;
+                }
+                else
+                {
+                    return dtm;
+                }
             }
-        }
-        else
-        {
-            dtm[a] = NULL;
+            x++;
         }
     }
+    cantPrestamos = x;
     return dtm;
 }
 
