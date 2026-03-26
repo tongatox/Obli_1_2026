@@ -22,6 +22,7 @@ struct Materiales
 
 void menu()
 {
+    
     system("clear");
     cout << "________________________" << endl;
     cout << "_________MENU___________" << endl;
