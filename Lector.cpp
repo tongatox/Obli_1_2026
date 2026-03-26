@@ -51,6 +51,7 @@ DtMaterial **Lector::getMaterialesPrestados(int &cantMateriales)
     DtMaterial **materiales = new DtMaterial *[cantMateriales];
     for (int i = 0; i < cantMateriales; i++)
     {
+        
         if (Libro *l = dynamic_cast<Libro *>(prestamo[i]->getMaterial()))
         {
 

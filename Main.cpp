@@ -277,14 +277,16 @@ void menuObtenerMaterialesPrestados()
 
     string ci;
     int cantMateriales;
+    int i = 0;
     DtMaterial **dtm;
     system("clear");
     cout << "__________________________________" << endl;
     cout << "___Obtener Materiales Prestados___" << endl;
     cout << "Ingrese cedula de lector: ";
     cin >> ci;
-    cout << "Ingrese cantidad de materiales a obtener: ";
-    cin >> cantMateriales;
+    while (colLectores.tope > i && colLectores.l[i]->getCi() != ci)
+        i++;
+     cantMateriales = colLectores.l[i]->getTopePrestamo();    
 
     try
     {
@@ -314,7 +316,7 @@ DtMaterial **obtenerMaterialesPrestados(string ci, int &cantMateriales)
         throw invalid_argument("La cantidad de materiales debe ser 10 como maximo.");
     if (colLectores.l[i]->getTopePrestamo() < cantMateriales)
         throw invalid_argument("No puede pedir mas materiales prestados de los que tiene el lector");
-
+    cout << "Usted actualemnte tiene " << cantMateriales <<  " prestamos" << endl;
     return colLectores.l[i]->getMaterialesPrestados(cantMateriales);
 }
 
