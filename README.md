@@ -1,5 +1,8 @@
 # Obli_1_2026
  
-Puse esto para si no queriamos dejar mensajes por si nececitabamos algo del otro.
-Puto el que lo leea.
+### Compilar y Ejecutar
+Para compilar el proyecto (creando la carpeta bin si no existe) y ejecutarlo usar: **make run**
+
+### Limpieza
+Si se requieren borrar los archivos binarios se puede usar el comando **make clean**
 
