@@ -51,4 +51,4 @@ clean:
 	rm -rf $(DIR)
 	
 run: all
-	./$(DIR)main
+	./$(DIR)Main
